@@ -1,0 +1,74 @@
+html, body {
+    height: 100%;
+}
+
+.library-container {
+    margin: 0;
+}
+
+.title-div, .author-div, .pages-div, .checkbox-div {
+    margin-block: 20px;
+}
+
+.library-title, .checkbox-text {
+    color: white;
+}
+
+.row, .library-container {
+    height: 100%;
+}
+
+.statistics {
+    flex-grow: 1;
+    padding-left: 30px;
+    font-size: 20px;
+}
+
+#add-book-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    background-color: rgb(67, 1, 129);
+    padding-inline: 50px;
+    padding-block: 20px;
+}
+
+#add-book-button {
+    margin-block: 30px;
+    font-weight: 500;
+    font-size: 20px;
+}
+
+#book-info-titles-section {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: #ffc107;
+    font-weight: 600;
+    font-size: 25px;
+    padding-block: 20px;
+}
+
+#library-section {
+    padding: 0;
+}
+
+#book-info-section {
+    max-height: 80%;
+    height: 80%;
+    padding: 40px;
+}
+
+#book-statistics-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#delete-all-button {
+    margin-right: 30px;
+    font-weight: 600;
+    font-size: 20px;
+}
