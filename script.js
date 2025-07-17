@@ -53,11 +53,7 @@ function deleteAllBooksFromLibrary() {
 function changeBookStatus(title) {
   library.books.forEach((book) => {
     if (book.title === title) {
-      if (book.status) {
-        book.status = false;
-      } else {
-        book.status = true;
-      }
+      book.status = !book.status
     }
   });
 }
@@ -87,7 +83,6 @@ function renderLibrary() {
     pagesSpan.textContent = book.pages;
 
     const statusSpan = document.createElement("td");
-    // statusSpan.textContent = book.status ? "Read" : "Unread";
 
     const statusButton = document.createElement("button");
     statusButton.setAttribute("id", book.title);
@@ -172,6 +167,11 @@ function attachEventListenersToButtons() {
       pagesInput.value,
       statusInput.checked
     );
+
+    titleInput.value = "";
+    authorInput.value = "";
+    pagesInput.value = "";
+    statusInput.checked = false;
 
     renderLibrary();
   });
