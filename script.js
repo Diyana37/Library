@@ -29,10 +29,17 @@ function addBookToLibrary(title, author, pages, status) {
     alert("Title is required!");
     return;
   }
+
+  if (library.books.find((book) => book.title === title)) {
+    alert("Title should be unique!");
+    return;
+  }
+
   if (!author) {
     alert("Author is required!");
     return;
   }
+
   if (!pages) {
     alert("Pages are required!");
     return;
@@ -40,6 +47,11 @@ function addBookToLibrary(title, author, pages, status) {
 
   const book = new Book(title, author, pages, status);
   library.books.push(book);
+
+  titleInput.value = "";
+  authorInput.value = "";
+  pagesInput.value = "";
+  statusInput.checked = false;
 }
 
 function removeBookFromLibrary(title) {
@@ -53,9 +65,17 @@ function deleteAllBooksFromLibrary() {
 function changeBookStatus(title) {
   library.books.forEach((book) => {
     if (book.title === title) {
-      book.status = !book.status
+      book.status = !book.status;
     }
   });
+}
+
+function getStatistics() {
+  let readBooks = library.books.filter((book) => book.status === true).length;
+  let unreadBooks = library.books.filter((book) => book.status === false).length;
+  let allBooks = library.books.length;
+
+  return {readBooks, unreadBooks, allBooks};
 }
 
 function renderLibrary() {
@@ -132,6 +152,16 @@ function renderLibrary() {
     bookInfoSection.appendChild(singleBook);
   });
 
+  const { readBooks, unreadBooks, allBooks } = getStatistics();
+
+  const readBooksSpan = document.querySelector("#read");
+  const unreadBooksSpan = document.querySelector("#unread");
+  const allBooksSpan = document.querySelector("#all");
+
+  readBooksSpan.textContent = `Books read: ${readBooks}`;
+  unreadBooksSpan.textContent = `Books unread: ${unreadBooks}`;
+  allBooksSpan.textContent = `Total books: ${allBooks}`;
+
   const removeSingleBookButtons = Array.from(
     document.querySelectorAll(".removal")
   );
@@ -168,11 +198,6 @@ function attachEventListenersToButtons() {
       statusInput.checked
     );
 
-    titleInput.value = "";
-    authorInput.value = "";
-    pagesInput.value = "";
-    statusInput.checked = false;
-
     renderLibrary();
   });
 
@@ -185,3 +210,4 @@ function attachEventListenersToButtons() {
 }
 
 attachEventListenersToButtons();
+renderLibrary();
