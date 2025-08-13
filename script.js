@@ -1,3 +1,17 @@
+class Library {
+  constructor() {
+    this.books = [];
+  }
+
+  get books() {
+    return this._books;
+  }
+
+  set books(value) {
+    this._books = value;
+  }
+}
+
 const library = new Library();
 
 const titleInput = document.querySelector("#title");
@@ -5,23 +19,45 @@ const authorInput = document.querySelector("#author");
 const pagesInput = document.querySelector("#pages");
 const statusInput = document.querySelector("#is-read");
 
-function Library() {
-  if (!new.target) {
-    throw new Error("Library must be called with 'new'");
+class Book {
+  constructor(title, author, pages, status) {
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.status = status;
   }
 
-  this.books = [];
-}
-
-function Book(title, author, pages, status) {
-  if (!new.target) {
-    throw new Error("Book must be called with 'new'");
+  get title() {
+    return this._title;
   }
 
-  this.title = title;
-  this.author = author;
-  this.pages = pages;
-  this.status = status;
+  set title(value) {
+    this._title = value;
+  }
+
+  get author() {
+    return this._author;
+  }
+
+  set author(value) {
+    this._author = value;
+  }
+
+  get pages() {
+    return this._pages;
+  }
+
+  set pages(value) {
+    this._pages = value;
+  }
+
+  get status() {
+    return this._status;
+  }
+
+  set status(value) {
+    this._status = value;
+  }
 }
 
 function addBookToLibrary(title, author, pages, status) {
@@ -72,10 +108,12 @@ function changeBookStatus(title) {
 
 function getStatistics() {
   let readBooks = library.books.filter((book) => book.status === true).length;
-  let unreadBooks = library.books.filter((book) => book.status === false).length;
+  let unreadBooks = library.books.filter(
+    (book) => book.status === false
+  ).length;
   let allBooks = library.books.length;
 
-  return {readBooks, unreadBooks, allBooks};
+  return { readBooks, unreadBooks, allBooks };
 }
 
 function renderLibrary() {
