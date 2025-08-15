@@ -1,122 +1,12 @@
-class Library {
-  constructor() {
-    this.books = [];
-  }
+import {
+  getStatistics,
+  removeBookFromLibrary,
+  changeBookStatus,
+} from "./books-service.js";
 
-  get books() {
-    return this._books;
-  }
+import { library } from "./constants.js";
 
-  set books(value) {
-    this._books = value;
-  }
-}
-
-const library = new Library();
-
-const titleInput = document.querySelector("#title");
-const authorInput = document.querySelector("#author");
-const pagesInput = document.querySelector("#pages");
-const statusInput = document.querySelector("#is-read");
-
-class Book {
-  constructor(title, author, pages, status) {
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.status = status;
-  }
-
-  get title() {
-    return this._title;
-  }
-
-  set title(value) {
-    this._title = value;
-  }
-
-  get author() {
-    return this._author;
-  }
-
-  set author(value) {
-    this._author = value;
-  }
-
-  get pages() {
-    return this._pages;
-  }
-
-  set pages(value) {
-    this._pages = value;
-  }
-
-  get status() {
-    return this._status;
-  }
-
-  set status(value) {
-    this._status = value;
-  }
-}
-
-function addBookToLibrary(title, author, pages, status) {
-  if (!title) {
-    alert("Title is required!");
-    return;
-  }
-
-  if (library.books.find((book) => book.title === title)) {
-    alert("Title should be unique!");
-    return;
-  }
-
-  if (!author) {
-    alert("Author is required!");
-    return;
-  }
-
-  if (!pages) {
-    alert("Pages are required!");
-    return;
-  }
-
-  const book = new Book(title, author, pages, status);
-  library.books.push(book);
-
-  titleInput.value = "";
-  authorInput.value = "";
-  pagesInput.value = "";
-  statusInput.checked = false;
-}
-
-function removeBookFromLibrary(title) {
-  library.books = library.books.filter((book) => book.title !== title);
-}
-
-function deleteAllBooksFromLibrary() {
-  library.books = [];
-}
-
-function changeBookStatus(title) {
-  library.books.forEach((book) => {
-    if (book.title === title) {
-      book.status = !book.status;
-    }
-  });
-}
-
-function getStatistics() {
-  let readBooks = library.books.filter((book) => book.status === true).length;
-  let unreadBooks = library.books.filter(
-    (book) => book.status === false
-  ).length;
-  let allBooks = library.books.length;
-
-  return { readBooks, unreadBooks, allBooks };
-}
-
-function renderLibrary() {
+export function renderLibrary() {
   const bookInfoSection = document.querySelector("#book-info-section");
 
   let child = bookInfoSection.lastElementChild;
@@ -224,28 +114,3 @@ function renderLibrary() {
     });
   });
 }
-
-function attachEventListenersToButtons() {
-  const addBookButton = document.querySelector("#add-book-button");
-
-  addBookButton.addEventListener("click", function (e) {
-    addBookToLibrary(
-      titleInput.value,
-      authorInput.value,
-      pagesInput.value,
-      statusInput.checked
-    );
-
-    renderLibrary();
-  });
-
-  const deleteAllButton = document.querySelector("#delete-all-button");
-  deleteAllButton.addEventListener("click", function (e) {
-    deleteAllBooksFromLibrary();
-
-    renderLibrary();
-  });
-}
-
-attachEventListenersToButtons();
-renderLibrary();
